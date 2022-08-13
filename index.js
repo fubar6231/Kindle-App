@@ -2,22 +2,25 @@ const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
 
-// const connection = require('./Connection')
-// const booksSchema = require('./BooksSchema')
-// const booksData = require('./archive/Books.json')
-//
-// app.use(express.json())
-//
-//
-// const BooksLib = mongoose.model("BooksLib", booksSchema)
-//
-// // booksData.forEach(book=>{
-// //     const bookDetails = new BooksLib (book)
-// //     bookDetails.save()
-// // })
-//
-//
-// app.listen(3000)
+
+const db = require('./src/config/db.config')
+
+
+
+
+
+db.BooksLibrary = require('./src/models/Books')
+app.use(express.json())
+
+app.listen(process.env.PORT)
+
+db.connectToDatabase().then(()=>{
+    db.BooksLibrary()
+})
+
+app.get('/api/books')
+
+
 //
 //
 // //gets all the books
