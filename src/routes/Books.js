@@ -1,8 +1,10 @@
 const express = require('express')
 const router = express.Router()
 
-const db = require('../config/db.config')
+const booksController = require('../controller/books')
 
-router.get("/",async (req, res)=>{
-    const allBooks = await db.BooksLibrary.find({Genre: "signal_processing"})
-    res.json(allBooks)})
+
+router.get("/",booksController.get )
+
+module.exports = router
+

@@ -4,7 +4,7 @@ const app = express()
 
 
 const db = require('./src/config/db.config')
-
+const BooksRouter = require("./src/routes/Books")
 
 
 
@@ -18,7 +18,7 @@ db.connectToDatabase().then(()=>{
     db.BooksLibrary()
 })
 
-app.get('/api/books')
+app.use('/api/books',BooksRouter)
 
 
 //
