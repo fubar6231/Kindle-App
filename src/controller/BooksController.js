@@ -39,7 +39,7 @@ module.exports.create = async (req, res) => {
     })
 }
 
-module.exports.findAll = async (req, res) => {
+module.exports.findByTitle = async (req, res) => {
     try {
         const {Title} = req.params
         let condition = Title ? {Title: {$regex: new RegExp(Title)}} : {}
@@ -54,7 +54,7 @@ module.exports.findAll = async (req, res) => {
 
 }
 
-module.exports.findOne = (req, res) => {
+module.exports.findById = (req, res) => {
     try {
         const {id} = req.params;
         const data = BooksLibrary.findOne(id)

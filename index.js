@@ -4,7 +4,7 @@ const app = express()
 
 
 const db = require('./src/config/db.config')
-const BooksRouter = require("./src/routes/Books")
+const BooksRouter = require("./src/routes/BooksRoutes")
 
 
 
