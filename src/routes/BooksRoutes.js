@@ -7,7 +7,6 @@ const booksController = require('../controller/BooksController')
 router.get("/", booksController.get)
 router.post("/", booksController.create)
 router.put("/:id", booksController.update)
-router.get("/", booksController.findByTitle)
 router.get("/:id", booksController.findById)
 
 module.exports = router
