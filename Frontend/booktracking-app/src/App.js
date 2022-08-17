@@ -15,20 +15,26 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getBooks: (object) => dispatch(Actions.GetBooks(object)),
-        createBook:(object)=>{dispatch(Actions.CreateBook(object))},
-        deleteBook: (object)=>{dispatch(Actions.DeleteBook(object))}
+        createBook: (object) => {
+            dispatch(Actions.CreateBook(object))
+        },
+        deleteBook: (object) => {
+            dispatch(Actions.DeleteBook(object))
+        }
     }
 }
 
 class App extends Component {
     state = {
         show: false,
+        searchInput: "",
         newBook: {
             Title: "",
             Author: "",
             Genre: "",
             Pages: "",
-            Publisher: ""},
+            Publisher: ""
+        },
     }
 
     handleShow = () => {
@@ -40,21 +46,26 @@ class App extends Component {
         e.preventDefault()
         let name = e.target.name
         let value = e.target.value
-        this.setState({newBook: {...this.state.newBook,[name]:value}})
+        this.setState({newBook: {...this.state.newBook, [name]: value}})
     }
 
-    handleCreateBook=()=>{
-        ApiCalls.CreateBook(this.state.newBook).then(res=>{
+    handleCreateBook = () => {
+        ApiCalls.CreateBook(this.state.newBook).then(res => {
             this.props.createBook(res.data)
             this.handleShow()
-        }).catch(err=>console.log(err))
+        }).catch(err => console.log(err))
     }
 
-    handleDeleteBook=(bookId)=>{
-        ApiCalls.DeleteBook(bookId).then(res=>{
-            const filterBooks = this.props.Books.filter(x=>x._id!==bookId)
+    handleDeleteBook = (bookId) => {
+        ApiCalls.DeleteBook(bookId).then(res => {
+            const filterBooks = this.props.Books.filter(x => x._id !== bookId)
             this.props.deleteBook(filterBooks)
         })
+    }
+
+
+    handleSearchInput = (input) => {
+        this.setState({searchInput: input})
     }
 
     componentDidMount() {
@@ -64,13 +75,25 @@ class App extends Component {
     }
 
     render() {
+        let bookElement
+        if (this.state.searchInput.length > 0) {
+            bookElement = this.props.Books.filter(Book => {
+                if (Book.Title.toLowerCase().includes(this.state.searchInput.toLowerCase())) {
+                    return Book
+                }
+            }).map(oneBook => {
+                return (<BookCard key={oneBook._id} BookDetails={oneBook} handleDelete={this.handleDeleteBook}/>)
+            })
+        } else {
+            bookElement = this.props.Books.map(oneBook => {
+                return (<BookCard key={oneBook._id} BookDetails={oneBook} handleDelete={this.handleDeleteBook}/>)
+            })
+        }
 
-        let bookElement = this.props.Books.map(oneBook => {
-            return (<BookCard key={oneBook._id} BookDetails={oneBook} handleDelete={this.handleDeleteBook}/>)
-        })
+
         return (
             <div>
-                <HomeNavBar/>
+                <HomeNavBar searchInput={this.state.searchInput} handleSearch={this.handleSearchInput}/>
                 <br/>
                 <Button variant="dark" onClick={this.handleShow}>Add Book</Button>
                 <AddBookModal show={this.state.show}

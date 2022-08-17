@@ -9,12 +9,12 @@ class HomeNavBar extends Component {
                     <Container>
                         <Navbar.Brand>
                             <img
-                            alt=""
-                            src="https://www.thestorygraph.com/assets/logo-white-15cb57f7a4673cdf300bdcb013bb5330457e5551ce7b0021b5bd5b1aa4f87d58.png"
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
-                        />{" "}Kindle Web
+                                alt=""
+                                src="https://www.thestorygraph.com/assets/logo-white-15cb57f7a4673cdf300bdcb013bb5330457e5551ce7b0021b5bd5b1aa4f87d58.png"
+                                width="30"
+                                height="30"
+                                className="d-inline-block align-top"
+                            />{" "}Kindle Web
                         </Navbar.Brand>
                         <Nav className="me-auto">
                             <Nav.Link href="#home">Home</Nav.Link>
@@ -24,6 +24,8 @@ class HomeNavBar extends Component {
                             <Form.Control
                                 type="search"
                                 placeholder="Search"
+                                value={this.props.searchInput}
+                                onChange={e => this.props.handleSearch(e.target.value)}
                                 className="me-2"
                                 aria-label="Search"
                             />
