@@ -1,7 +1,49 @@
 import React, {Component} from 'react';
 import {Button, Container, Form, Nav, Navbar} from "react-bootstrap";
+import * as ApiCalls from "./ApiCalls";
+import AddBookModal from "./AddBookModal";
+import * as Actions from "../Redux/Actions";
+import {connect} from "react-redux";
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createBook: (object) => {
+            dispatch(Actions.CreateBook(object))
+        }
+    }
+}
+
 
 class HomeNavBar extends Component {
+    state = {
+        show: false,
+        newBook: {
+            Title: "",
+            Author: "",
+            Genre: "",
+            Pages: "",
+            Publisher: ""
+        },
+    }
+
+    handleShow = () => {
+        this.setState({show: !this.state.show})
+    }
+
+    handleInput = (e) => {
+        e.preventDefault()
+        let name = e.target.name
+        let value = e.target.value
+        this.setState({newBook: {...this.state.newBook, [name]: value}})
+    }
+
+    handleCreateBook = () => {
+        ApiCalls.CreateBook(this.state.newBook).then(res => {
+            this.props.createBook(res.data)
+            this.handleShow()
+        }).catch(err => console.log(err))
+    }
+
     render() {
         return (
             <>
@@ -19,7 +61,13 @@ class HomeNavBar extends Component {
                         <Nav className="me-auto">
                             <Nav.Link href="#home">Home</Nav.Link>
                             <Nav.Link href="#features">Reading List</Nav.Link>
+                            <Button variant="dark" onClick={this.handleShow}>Add Book</Button>
                         </Nav>
+                        <AddBookModal show={this.state.show}
+                                      handleShow={this.handleShow}
+                                      handleInput={this.handleInput}
+                                      handleCreate={this.handleCreateBook}
+                        />
                         <Form className="d-flex">
                             <Form.Control
                                 type="search"
@@ -29,7 +77,6 @@ class HomeNavBar extends Component {
                                 className="me-2"
                                 aria-label="Search"
                             />
-                            <Button variant="outline-light">Search</Button>
                         </Form>
                     </Container>
                 </Navbar>
@@ -38,4 +85,4 @@ class HomeNavBar extends Component {
     }
 }
 
-export default HomeNavBar;
+export default connect(null,mapDispatchToProps)(HomeNavBar);

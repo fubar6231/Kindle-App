@@ -1,4 +1,3 @@
-import {Button} from "react-bootstrap";
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 
@@ -6,7 +5,6 @@ import BookCard from "./Components/BookCard";
 import * as Actions from "./Redux/Actions"
 import * as ApiCalls from "./Components/ApiCalls"
 import HomeNavBar from "./Components/Home_NavBar";
-import AddBookModal from "./Components/AddBookModal";
 
 const mapStateToProps = (state) => {
     return {Books: state.Books}
@@ -37,24 +35,7 @@ class App extends Component {
         },
     }
 
-    handleShow = () => {
-        this.setState({show: !this.state.show})
-    }
 
-
-    handleInput = (e) => {
-        e.preventDefault()
-        let name = e.target.name
-        let value = e.target.value
-        this.setState({newBook: {...this.state.newBook, [name]: value}})
-    }
-
-    handleCreateBook = () => {
-        ApiCalls.CreateBook(this.state.newBook).then(res => {
-            this.props.createBook(res.data)
-            this.handleShow()
-        }).catch(err => console.log(err))
-    }
 
     handleDeleteBook = (bookId) => {
         ApiCalls.DeleteBook(bookId).then(res => {
@@ -94,13 +75,6 @@ class App extends Component {
         return (
             <div>
                 <HomeNavBar searchInput={this.state.searchInput} handleSearch={this.handleSearchInput}/>
-                <br/>
-                <Button variant="dark" onClick={this.handleShow}>Add Book</Button>
-                <AddBookModal show={this.state.show}
-                              handleShow={this.handleShow}
-                              handleInput={this.handleInput}
-                              handleCreate={this.handleCreateBook}
-                />
                 <br/>
                 <br/>
                 <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
