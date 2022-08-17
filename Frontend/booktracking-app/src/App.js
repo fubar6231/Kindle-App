@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getBooks: (object) => dispatch(Actions.GetBooks(object)),
-        createBook:(object)=>{dispatch(Actions.CreateBooks(object))}
+        createBook:(object)=>{dispatch(Actions.CreateBook(object))},
+        deleteBook: (object)=>{dispatch(Actions.DeleteBook(object))}
     }
 }
 
@@ -43,10 +44,17 @@ class App extends Component {
     }
 
     handleCreateBook=()=>{
-        ApiCalls.CreateBooks(this.state.newBook).then(res=>{
+        ApiCalls.CreateBook(this.state.newBook).then(res=>{
             this.props.createBook(res.data)
             this.handleShow()
         }).catch(err=>console.log(err))
+    }
+
+    handleDeleteBook=(bookId)=>{
+        ApiCalls.DeleteBook(bookId).then(res=>{
+            const filterBooks = this.props.Books.filter(x=>x._id!==bookId)
+            this.props.deleteBook(filterBooks)
+        })
     }
 
     componentDidMount() {
@@ -58,7 +66,7 @@ class App extends Component {
     render() {
 
         let bookElement = this.props.Books.map(oneBook => {
-            return (<BookCard key={oneBook._id} BookDetails={oneBook}/>)
+            return (<BookCard key={oneBook._id} BookDetails={oneBook} handleDelete={this.handleDeleteBook}/>)
         })
         return (
             <div>

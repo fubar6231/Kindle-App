@@ -7,9 +7,16 @@ export const GetBooks = (Books)=>{
     }
 }
 
-export const CreateBooks = (Books)=>{
+export const CreateBook = (Books)=>{
     return {
         type:ActionTypes.createBook,
+        payload:Books
+    }
+}
+
+export const DeleteBook=(Books)=>{
+    return{
+        type:ActionTypes.deleteBook,
         payload:Books
     }
 }
