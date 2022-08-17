@@ -85,4 +85,4 @@ class HomeNavBar extends Component {
     }
 }
 
-export default connect(null,mapDispatchToProps)(HomeNavBar);
+export default connect(null, mapDispatchToProps)(HomeNavBar);

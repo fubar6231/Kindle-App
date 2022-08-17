@@ -24,17 +24,8 @@ const mapDispatchToProps = (dispatch) => {
 
 class App extends Component {
     state = {
-        show: false,
         searchInput: "",
-        newBook: {
-            Title: "",
-            Author: "",
-            Genre: "",
-            Pages: "",
-            Publisher: ""
-        },
     }
-
 
 
     handleDeleteBook = (bookId) => {
