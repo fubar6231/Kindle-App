@@ -6,3 +6,10 @@ export const GetBooks = (Books)=>{
         payload:Books
     }
 }
+
+export const CreateBooks = (Books)=>{
+    return {
+        type:ActionTypes.createBook,
+        payload:Books
+    }
+}

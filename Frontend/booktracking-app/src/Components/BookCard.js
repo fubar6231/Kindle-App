@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Card, ListGroup} from "react-bootstrap";
+import {Button, Card, ListGroup} from "react-bootstrap";
 
 class BookCard extends Component {
     render() {
@@ -16,8 +16,7 @@ class BookCard extends Component {
                     <ListGroup.Item>Publisher : {this.props.BookDetails.Publisher}</ListGroup.Item>
                 </ListGroup>
                 <Card.Body>
-                    <Card.Link href="#">Card Link</Card.Link>
-                    <Card.Link href="#">Another Link</Card.Link>
+                    <Button variant="danger">Remove</Button>
                 </Card.Body>
             </Card>
         );

@@ -1,3 +1,4 @@
 export const ActionTypes = {
-    getBooks:"getBooks"
+    getBooks:"getBooks",
+    createBook:"createBook"
 }
