@@ -77,11 +77,11 @@ module.exports.create = async (req, res, next) => {
     newBook.save().then(data => {
         res.status(200).json(data)
     }).catch(err => {
-            res.status(500).json({
-                message:
-                    err.message || "Some error occurred while creating the Books."
-            })
+        res.status(500).json({
+            message:
+                err.message || "Some error occurred while creating the Books."
         })
+    })
 }
 
 
@@ -100,7 +100,7 @@ module.exports.findById = async (req, res, next) => {
 }
 
 module.exports.update = async (req, res, next) => {
-    if (Object.keys(req.body).length<1) {
+    if (Object.keys(req.body).length < 1) {
         return res.status(400).json({
             message: "Data to update can not be empty!"
         });
@@ -119,3 +119,24 @@ module.exports.update = async (req, res, next) => {
         });
     }
 };
+
+module.exports.delete = async (req, res) => {
+    const {id} = req.params
+    try {
+
+        const data = await db.BooksLibrary.findByIdAndDelete({_id:id})
+        if (!data) {
+            res.status(404).send({
+                message: `Cannot delete Book with id=${id}. Maybe Book was not found!`
+            });
+        } else {
+            res.send({
+                message: "Book was deleted successfully!"
+            });
+        }
+    } catch (err) {
+        res.status(500).send({
+            message: "Could not delete Book with id=" + id
+        })
+    }
+}
