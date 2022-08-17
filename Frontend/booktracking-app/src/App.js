@@ -5,6 +5,7 @@ import BookCard from "./Components/BookCard";
 import * as Actions from "./Redux/Actions"
 import * as ApiCalls from "./Components/ApiCalls"
 import HomeNavBar from "./Components/Home_NavBar";
+import {Spinner} from "react-bootstrap";
 
 const mapStateToProps = (state) => {
     return {Books: state.Books}
@@ -13,9 +14,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getBooks: (object) => dispatch(Actions.GetBooks(object)),
-        createBook: (object) => {
-            dispatch(Actions.CreateBook(object))
-        },
         deleteBook: (object) => {
             dispatch(Actions.DeleteBook(object))
         }
@@ -24,7 +22,7 @@ const mapDispatchToProps = (dispatch) => {
 
 class App extends Component {
     state = {
-        searchInput: "",
+        searchInput: ""
     }
 
 
@@ -48,16 +46,16 @@ class App extends Component {
 
     render() {
         let bookElement
-        if (this.state.searchInput.length > 0) {
+        if (this.props.Books.length < 1) {
+            bookElement = <Spinner animation={"border"}></Spinner>
+        } else {
             bookElement = this.props.Books.filter(Book => {
                 if (Book.Title.toLowerCase().includes(this.state.searchInput.toLowerCase())) {
                     return Book
+                } else if (this.state.searchInput === "") {
+                    return Book
                 }
             }).map(oneBook => {
-                return (<BookCard key={oneBook._id} BookDetails={oneBook} handleDelete={this.handleDeleteBook}/>)
-            })
-        } else {
-            bookElement = this.props.Books.map(oneBook => {
                 return (<BookCard key={oneBook._id} BookDetails={oneBook} handleDelete={this.handleDeleteBook}/>)
             })
         }
