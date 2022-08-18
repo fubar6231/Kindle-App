@@ -1,13 +1,10 @@
 const mongoose = require('mongoose')
 
 
+
 const ReadingList =mongoose.model("ReadingList",mongoose.Schema({
-    Title: String,
-    Author: String,
-    Genre: String,
-    Pages: Number,
-    Read: Number,
-    Publisher: String
+    Read:{type:Number,default:0},
+    bookDetails:{}
 }))
 
 module.exports=ReadingList
