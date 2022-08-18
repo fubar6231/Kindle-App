@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
+import {Spinner} from "react-bootstrap";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 
 import BookCard from "./Components/BookCard";
 import * as Actions from "./Redux/Actions"
 import * as ApiCalls from "./Components/ApiCalls"
 import HomeNavBar from "./Components/Home_NavBar";
-import {Spinner} from "react-bootstrap";
+import ReadingList from "./Components/ReadingList";
+
 
 const mapStateToProps = (state) => {
     return {Books: state.Books}
@@ -62,15 +65,21 @@ class App extends Component {
 
 
         return (
-            <div>
-                <HomeNavBar searchInput={this.state.searchInput} handleSearch={this.handleSearchInput}/>
-                <br/>
-                <br/>
-                <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
-                    {bookElement}
-                </div>
+            <Router>
+                <Routes>
+                    <Route path="/" element={<>
+                        <HomeNavBar searchInput={this.state.searchInput} handleSearch={this.handleSearchInput}/>
+                        <br/>
+                        <br/>
+                        <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-evenly"}}>
+                            {bookElement}
+                        </div>
+                    </>}>
+                    </Route>
+                    <Route path="/readingList" element={<ReadingList/>}></Route>
+                </Routes>
+            </Router>
 
-            </div>
         );
     }
 }

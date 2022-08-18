@@ -59,8 +59,8 @@ class HomeNavBar extends Component {
                             />{" "}Kindle Web
                         </Navbar.Brand>
                         <Nav className="me-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#features">Reading List</Nav.Link>
+                            <Nav.Link href="/">Home</Nav.Link>
+                            <Nav.Link href="/readingList">Reading List</Nav.Link>
                             <Button variant="dark" onClick={this.handleShow}>Add Book</Button>
                         </Nav>
                         <AddBookModal show={this.state.show}
