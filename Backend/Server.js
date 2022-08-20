@@ -17,4 +17,4 @@ db.connectToDatabase()
 
 
 app.use('/api/books', BooksRouter)
-app.use('/api/books/readingList', ReadingListRouter)
+app.use('/api/readingList', ReadingListRouter)

@@ -9,9 +9,11 @@ import * as ApiCalls from "./Components/ApiCalls"
 import HomeNavBar from "./Components/Home_NavBar";
 import ReadingList from "./Components/ReadingList";
 
+const setBooksStore = require("./Components/SetStore")
+
 
 const mapStateToProps = (state) => {
-    return {Books: state.Books}
+    return {Books: state.BooksStore.Books}
 }
 
 const mapDispatchToProps = (dispatch) => {
@@ -42,13 +44,23 @@ class App extends Component {
     }
 
     componentDidMount() {
-        ApiCalls.GetBooks().then(object => {
-            this.props.getBooks(object.data)
-        }).catch(error => console.error(error))
+        setBooksStore().then(object => {
+            this.props.getBooks(object)
+        })
+        // ApiCalls.GetBooks().then(object => {
+        //     this.props.getBooks(object.data)
+        // }).catch(error => console.error(error))
     }
+
+    componentWillUnmount() {
+        let object=[]
+        this.props.getBooks(object)
+    }
+
 
     render() {
         let bookElement
+        console.log(this.props.Books.length)
         if (this.props.Books.length < 1) {
             bookElement = <Spinner animation={"border"}></Spinner>
         } else {

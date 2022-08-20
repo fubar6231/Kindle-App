@@ -6,7 +6,6 @@ module.exports.get = async (req, res, next) => {
 }
 
 module.exports.create = async (req, res, next) => {
-    console.log(req.body)
     const newBookInList = new db.ReadingList({
         read:req.body.read,
         bookDetails:req.body.bookDetails

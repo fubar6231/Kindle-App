@@ -123,7 +123,6 @@ module.exports.update = async (req, res, next) => {
 module.exports.delete = async (req, res) => {
     const {id} = req.params
     try {
-
         const data = await db.BooksLibrary.findByIdAndDelete({_id:id})
         if (!data) {
             res.status(404).send({

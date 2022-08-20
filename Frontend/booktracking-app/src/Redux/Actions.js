@@ -20,3 +20,31 @@ export const DeleteBook=(Books)=>{
         payload:Books
     }
 }
+
+export const GetReadingList=(ReadingList)=>{
+    return{
+        type:ActionTypes.getReadingList,
+        payload:ReadingList
+    }
+}
+
+export const AddToReadingList=(UpdatedList)=>{
+    return{
+        type:ActionTypes.addToReadingList,
+        payload:UpdatedList
+    }
+}
+
+export const updateReadPages=(ReadingList)=>{
+    return{
+        type:ActionTypes.getReadingList,
+        payload:ReadingList
+    }
+}
+
+export const updateBooksStatus =(Books)=>{
+    return{
+        type:ActionTypes.updateBooksStatus,
+        payload:Books
+    }
+}
